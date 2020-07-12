@@ -1,9 +1,11 @@
 #include "../hearder/phc.h"
-//#include <iostream>
+#include <iostream>
+#include <locale.h>
 
 using namespace std;
 
 int main() {
+    setlocale(LC_CTYPE, "Spanish");
     LecturaArchivos la;
     ABB arbol, arbol1;
     Busqueda b;
@@ -11,12 +13,6 @@ int main() {
 
     Operador op;
     op.operaciones(arbol, la, b, mc);
-//    while(true){
-//        string h = "goal como esyas";
-//        cout << h << endl;
-//        getline(cin, h, '\n');
-//        cout << h << endl;
-//    }
 
     return 0;
 }

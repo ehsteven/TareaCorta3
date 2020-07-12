@@ -12,11 +12,6 @@ using namespace std;
 
 class NodoBB {
 public:
-    NodoBB() {
-        Hizq = NULL;
-        Hder = NULL;
-    }
-
     NodoBB(int num, string pNombre) {
         cedula = num;
         nombre = pNombre;
@@ -107,8 +102,6 @@ public:
 
 private:
     NodoBB *raiz;
-
-
 };
 
 #endif //TAREACORTA2_ABB_H

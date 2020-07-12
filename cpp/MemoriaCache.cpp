@@ -24,7 +24,7 @@ void MemoriaCache::reacomodarMemoria(int indice) {
         memoria[19].nombre = "";
         return;
     }
-    for (int i = indice; i < tope-1; i++) {
+    for (int i = indice; i < tope - 1; i++) {
         memoria[i] = memoria[i + 1];
     }
     memoria[19].cedula = 0;
@@ -32,17 +32,17 @@ void MemoriaCache::reacomodarMemoria(int indice) {
 }
 
 void MemoriaCache::imprimerCache() {
-    if(memoriaVacia()){
-        cout<<"\nLa memoria esta vacia!"<<endl;
+    if (memoriaVacia()) {
+        cout << "\nLa memoria esta vacia!" << endl;
         return;
     }
     for (int i = 0; i < tope; i++) {
         NodoCache aux = memoria[i];
-        cout <<i+1<< ". Nombre: " << aux.nombre << " - Cedula: " << aux.cedula << endl;
+        cout << i + 1 << ". Nombre: " << aux.nombre << " - Cedula: " << aux.cedula << endl;
     }
 }
 
-int MemoriaCache::buscarIndice(int cedula){
+int MemoriaCache::buscarIndice(int cedula) {
     int encontrado = 0;
     if (!memoriaVacia()) {
         for (int i = 0; i < tope; i++) {
@@ -52,7 +52,7 @@ int MemoriaCache::buscarIndice(int cedula){
             }
         }
     }
-    if(encontrado == 0 || memoriaVacia())
+    if (encontrado == 0 || memoriaVacia())
         return -1;
     return -1;
 }

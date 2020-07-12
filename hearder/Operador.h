@@ -5,7 +5,6 @@
 #ifndef TAREACORTA3_OPERADOR_H
 #define TAREACORTA3_OPERADOR_H
 
-
 #include "ABB.h"
 #include "Busqueda.h"
 
@@ -14,6 +13,8 @@ using namespace std;
 class Operador {
 public:
     Operador() {}
+
+    ~Operador();
 
     void operaciones(ABB arbol, LecturaArchivos la, Busqueda busqueda, MemoriaCache memoriaCache);
 
