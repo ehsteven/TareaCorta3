@@ -18,7 +18,7 @@ void Busqueda::busquedaDato(MemoriaCache *memoria, ABB arbol, int cedula) {
     if (busqueda == 0) {
         NodoBB *aux = arbol.buscarElemento(cedula);
         if (aux != NULL) {
-            la.buscar(aux->getIndice(), memoria);
+            la.buscar(aux->getIndice(), memoria, cedula);
             NodoCache nodoCache = memoria->getMemoria()[0];
             cout << "\nNombre: " << nodoCache.getNombre() << " - Cedula: " << nodoCache.getCedula() << "\n" << endl;
         }

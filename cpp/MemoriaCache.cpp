@@ -13,9 +13,15 @@ MemoriaCache::MemoriaCache() {
 }
 
 void MemoriaCache::llenarMemoria(int cedula, string nombre, int topeActual) {
-    memoria[topeActual].cedula = cedula;
-    memoria[topeActual].nombre = nombre;
-    tope++;
+    if(memoria[0].cedula == cedula && memoria[0].nombre == nombre){
+        memoria[topeActual].cedula = 0;
+        memoria[topeActual].nombre = "";
+        tope++;
+    }else{
+        memoria[topeActual].cedula = cedula;
+        memoria[topeActual].nombre = nombre;
+        tope++;
+    }
 }
 
 void MemoriaCache::reacomodarMemoria(int indice) {

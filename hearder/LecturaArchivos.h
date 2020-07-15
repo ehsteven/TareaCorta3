@@ -21,7 +21,7 @@ public:
 
     int convertirNumero(string numS);
 
-    void buscar(int indice, MemoriaCache *memoria);
+    void buscar(int indice, MemoriaCache *memoria, int cedula);
 
     ABB leerClientes(ABB arbolBinario, int firts);
 
@@ -42,6 +42,8 @@ public:
     int insertarIndice();
 
     void purgar();
+
+    int cantidadBorradosAntes20();
 };
 
 

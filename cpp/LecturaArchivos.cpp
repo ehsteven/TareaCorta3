@@ -4,6 +4,8 @@
 
 #include "../hearder/LecturaArchivos.h"
 
+int MAX;
+
 int LecturaArchivos::convertirNumero(string numS) {
     int Numero;
     stringstream geek(numS);
@@ -18,6 +20,7 @@ ABB LecturaArchivos::leerClientes(ABB arbolBinario, int first) {
     remove(temp.c_str());
     string s, ante = "";
     int ind = 1;
+    int maximo = 0;
     while (!ar.eof()) {
         getline(ar, s);
         string word, cedula, nombre, borrado = "";
@@ -42,22 +45,31 @@ ABB LecturaArchivos::leerClientes(ABB arbolBinario, int first) {
             } else
                 word = word += x;
         }
-        if (nombre == "")                         //El arbol se construye apartir de el archivo de indices//
-            nombre = word;                        //no desde este archivo//
+        if (nombre == "")
+            nombre = word;
         else
             borrado = word;
         int cedulaNum = convertirNumero(cedula);
-        NodoBB *aux = arbolBinario.buscarElementoIndice(cedulaNum);
-        if (ante != s && s != "") {
-            if (aux == NULL) {
-                crearArchivoTemp(temp, s, 1);
-                arbolBinario.InsertaNodo(&ind, word, cedulaNum);
-                ind++;
-                ante = s;
-            } else
-                cout << "El elemento ya fue creado: " << cedulaNum << endl;
+        if (borrado == "") {
+            NodoBB *aux = arbolBinario.buscarElementoIndice(cedulaNum);
+            if (ante != s && s != "") {
+                if (aux == NULL) {
+                    crearArchivoTemp(temp, s, 1);
+                    arbolBinario.InsertaNodo(&ind, word, cedulaNum);
+                    ind++;
+                } else {
+                    crearArchivoTemp(temp, s, 0);
+                    cout << "El elemento ya fue creado: " << cedulaNum << endl;
+                }
+            }
+            ante = s;
+        } else {
+            crearArchivoTemp(temp, s, 1);
         }
+        if (s != "")
+            maximo++;
     }
+    MAX = maximo;
     ar.close();
     if (first == 0) {
         remove(nombreArch.c_str());
@@ -123,15 +135,16 @@ void LecturaArchivos::crearArchivoIndex(ABB arbol) {
     file.close();
 }
 
-void LecturaArchivos::buscar(int indice, MemoriaCache *memoria) {
+void LecturaArchivos::buscar(int indice, MemoriaCache *memoria, int pCedula) {
     string nombreArch = "..\\archivos\\Clientes.txt";
     ifstream ar(nombreArch);
     string s, ante = "";
     int ind = 1;
     memoria->setTope(0);
+    bool flag = false;
     while (!ar.eof()) {
         getline(ar, s);
-        string word, cedula, nombre = "";
+        string word, cedula, nombre, borrado = "";
         int i = 0;
         if (ind == indice) {
             for (auto x : s) {
@@ -152,12 +165,18 @@ void LecturaArchivos::buscar(int indice, MemoriaCache *memoria) {
             }
             if (nombre == "")
                 nombre = word;
-            if (ante != s) {
+            else
+                borrado = word;
+            int num = convertirNumero(cedula);
+            if (ante != s && s != "") {
                 if (memoria->getTope() < 20) {
-                    int ced = convertirNumero(cedula);
-                    memoria->llenarMemoria(ced, nombre, memoria->getTope());
-                    ind = indice;
-                    ante = s;
+                    if ((borrado == "" && num == pCedula) || (flag && borrado == "")) {
+                        int ced = convertirNumero(cedula);
+                        memoria->llenarMemoria(ced, nombre, memoria->getTope());
+                        ind = indice;
+                        ante = s;
+                        flag = true;
+                    }
                 } else
                     break;
             }
@@ -167,7 +186,6 @@ void LecturaArchivos::buscar(int indice, MemoriaCache *memoria) {
     if (memoria->getTope() < 20) {
         llenarMemoria(memoria, memoria->getTope(), 1);
     }
-
 }
 
 void LecturaArchivos::llenarMemoria(MemoriaCache *memoria, int tope, int indice) {
@@ -179,7 +197,7 @@ void LecturaArchivos::llenarMemoria(MemoriaCache *memoria, int tope, int indice)
         getline(ar, s);
         string word, cedula, nombre, borrado = "";
         int i = 0;
-        if(ind == indice) {
+        if (ind == indice) {
             if (tope < 20) {
                 for (auto x : s) {
                     if (x == ';' || x == '\n') {
@@ -205,18 +223,16 @@ void LecturaArchivos::llenarMemoria(MemoriaCache *memoria, int tope, int indice)
                     nombre = word;
                 else
                     borrado = word;
-                if (borrado == "") {
+                if (borrado == "" && s != "") {
                     int ced = convertirNumero(cedula);
                     memoria->llenarMemoria(ced, nombre, memoria->getTope());
                     tope++;
                 }
             } else
                 break;
-        }else{
+        } else {
             ind++;
         }
-
-
     }
 }
 
@@ -313,7 +329,9 @@ void LecturaArchivos::insertar(int cedula, string nombre, ABB *arbol, MemoriaCac
     file1.close();
     arbol->InsertaNodo(indiceTotal, cedula);
     mc->llenarMemoria(cedula, nombre, mc->getTope());
-    llenarMemoria(mc, mc->getTope(), indiceTotal-19);
+    int borrado = cantidadBorradosAntes20();
+    llenarMemoria(mc, mc->getTope(), (indiceTotal + borrado) - 20);
+    cout<<"Se ha ingresado correctamente\n"<<endl;
 }
 
 int LecturaArchivos::insertarIndice() {
@@ -379,4 +397,38 @@ void LecturaArchivos::purgar() {
     remove(nombreArch.c_str());
     actualizarClientes(nombreArch, temp);
     remove(temp.c_str());
+}
+
+int LecturaArchivos::cantidadBorradosAntes20() {
+    string nombreArch = "..\\archivos\\Clientes.txt";
+    ifstream ar(nombreArch);
+    string s;
+    int ind = 0, total = 0;
+    while (!ar.eof()) {
+        getline(ar, s);
+        string word, cedula, nombre, borrado = "";
+        int i = 0;
+        for (auto x : s) {
+            if (x == ';' || x == '\n') {
+                switch (i) {
+                    case 0:
+                        cedula = word;
+                        word = "";
+                        break;
+                    case 1:
+                        nombre = word;
+                        word = "";
+                        break;
+                }
+                i++;
+            } else
+                word = word += x;
+        }
+        if (nombre == "")
+            continue;
+        else {
+            total++;
+        }
+    }
+    return total;
 }

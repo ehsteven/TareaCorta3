@@ -14,6 +14,7 @@ int Operador::convertirNumero(string numS) {
 void Operador::operaciones(ABB arbol, LecturaArchivos la, Busqueda b, MemoriaCache mc) {
     bool sigue = true;
     ABB arbolInterno;
+    bool inhabilitar = true;
     while (sigue) {
         string h;
         cout << "\n************ MENU DE INICIO *************" << endl;
@@ -23,14 +24,20 @@ void Operador::operaciones(ABB arbol, LecturaArchivos la, Busqueda b, MemoriaCac
         int seccion = convertirNumero(h);
         switch (seccion) {
             case 1:
-                cout << "\nEventualidades: \n" << endl;
-                arbolInterno = la.leerClientes(arbolInterno, 0);
-                arbol = la.leerArchivoIndex();
-                if (arbol.getRaiz() != NULL) {
+                if (inhabilitar) {
+                    cout << "\nEventualidades: \n" << endl;
+                    arbolInterno = la.leerClientes(arbolInterno, 0);
+                    arbol = la.leerArchivoIndex();
+                    if (arbol.getRaiz() != NULL) {
+                        cout << "*************************************"
+                                "\nLos datos se han cargado correctamente!" << endl;
+                        inhabilitar = false;
+                    } else
+                        cout << "No se han podido cargar los datos correctamente\nRevise el archivo Clientes.txt"
+                             << endl;
+                } else
                     cout << "*************************************"
                             "\nLos datos se han cargado correctamente!" << endl;
-                } else
-                    cout << "No se han podido cargar los datos correctamente\nRevise el archivo Clientes.txt" << endl;
                 break;
             case 2:
                 if (arbol.getRaiz() != NULL)

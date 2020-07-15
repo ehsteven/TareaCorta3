@@ -4,6 +4,7 @@
 04;Mario
 101;Francisco
 102;Jose
+13;Kevin
 14;Mario
 32;Michael
 151;Francisco
@@ -27,6 +28,10 @@
 94;Juan
 778;Paula
 884;Eduardo
+69;Francisco
+25;Kevin
+45;Mario
+78;Michael
 082;Jose
 138;Kevin
 144;Mario
@@ -34,9 +39,7 @@
 43;Kevin
 44;Mario
 251;Francisco
-262;Jose
 836;Kevin
-846;Mario
 381;Michael
 183;Alejandro
 547;Manuel
@@ -54,5 +57,8 @@
 412;Álvaro
 439;Manuel
 934;Juan
-10;Estveen fer
-12;luisa maria
+24;estveen 24
+26;esyvee
+10;estveen
+16;26
+17;esteven
