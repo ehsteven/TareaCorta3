@@ -13,7 +13,7 @@ int LecturaArchivos::convertirNumero(string numS) {
     return Numero;
 }
 
-ABB LecturaArchivos::leerClientes(ABB arbolBinario, int first) {
+ABB LecturaArchivos::leerClientes(ABB arbolCompleto, int first) {
     string nombreArch = "..\\archivos\\Clientes.txt";
     string temp = "..\\archivos\\temp.txt";
     ifstream ar(nombreArch);
@@ -51,11 +51,11 @@ ABB LecturaArchivos::leerClientes(ABB arbolBinario, int first) {
             borrado = word;
         int cedulaNum = convertirNumero(cedula);
         if (borrado == "") {
-            NodoBB *aux = arbolBinario.buscarElementoIndice(cedulaNum);
+            NodoBB *aux = arbolCompleto.buscarElementoIndice(cedulaNum);
             if (ante != s && s != "") {
                 if (aux == NULL) {
                     crearArchivoTemp(temp, s, 1);
-                    arbolBinario.InsertaNodo(&ind, word, cedulaNum);
+                    arbolCompleto.InsertaNodo(&ind, word, cedulaNum);
                     ind++;
                 } else {
                     crearArchivoTemp(temp, s, 0);
@@ -76,8 +76,8 @@ ABB LecturaArchivos::leerClientes(ABB arbolBinario, int first) {
         actualizarClientes(nombreArch, temp);
         remove(temp.c_str());
     }
-    crearArchivoIndex(arbolBinario);
-    return arbolBinario;
+    crearArchivoIndex(arbolCompleto);
+    return arbolCompleto;
 }
 
 ABB LecturaArchivos::leerArchivoIndex() {
@@ -331,7 +331,7 @@ void LecturaArchivos::insertar(int cedula, string nombre, ABB *arbol, MemoriaCac
     mc->llenarMemoria(cedula, nombre, mc->getTope());
     int borrado = cantidadBorradosAntes20();
     llenarMemoria(mc, mc->getTope(), (indiceTotal + borrado) - 20);
-    cout<<"Se ha ingresado correctamente\n"<<endl;
+    cout << "Se ha ingresado correctamente\n" << endl;
 }
 
 int LecturaArchivos::insertarIndice() {

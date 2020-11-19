@@ -1,5 +1,4 @@
 #include "../hearder/phc.h"
-#include <iostream>
 #include <locale.h>
 
 using namespace std;
@@ -7,7 +6,7 @@ using namespace std;
 int main() {
     setlocale(LC_CTYPE, "Spanish");
     LecturaArchivos la;
-    ABB arbol, arbol1;
+    ABB arbol;
     Busqueda b;
     MemoriaCache mc;
 

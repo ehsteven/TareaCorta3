@@ -13,12 +13,13 @@ int Operador::convertirNumero(string numS) {
 
 void Operador::operaciones(ABB arbol, LecturaArchivos la, Busqueda b, MemoriaCache mc) {
     bool sigue = true;
-    ABB arbolInterno;
+    ABB arbolCompleto;
     bool inhabilitar = true;
     while (sigue) {
         string h;
         cout << "\n************ MENU DE INICIO *************" << endl;
-        cout << "\n1. Cargar datos\n2. Busqueda\n3. Insertar\n4. Eliminar\n5. Purgar\n6. Reindexar\n7. Salir" << endl;
+        cout << "\n1. Cargar datos\n2. Cache\n3. Busqueda\n4. Insertar\n5. Eliminar\n6. Purgar\n7. Reindexar\n8. Salir"
+             << endl;
         cout << "Escoja una opción:";
         getline(cin, h, '\n');
         int seccion = convertirNumero(h);
@@ -26,7 +27,7 @@ void Operador::operaciones(ABB arbol, LecturaArchivos la, Busqueda b, MemoriaCac
             case 1:
                 if (inhabilitar) {
                     cout << "\nEventualidades: \n" << endl;
-                    arbolInterno = la.leerClientes(arbolInterno, 0);
+                    arbolCompleto = la.leerClientes(arbolCompleto, 0);
                     arbol = la.leerArchivoIndex();
                     if (arbol.getRaiz() != NULL) {
                         cout << "*************************************"
@@ -40,30 +41,38 @@ void Operador::operaciones(ABB arbol, LecturaArchivos la, Busqueda b, MemoriaCac
                             "\nLos datos se han cargado correctamente!" << endl;
                 break;
             case 2:
+                if (mc.getTope() == 0)
+                    cout << "\nNo hay datos en la caché" << endl;
+                else {
+                    cout << "\nMemoria caché:" << endl;
+                    mc.imprimerCache();
+                }
+                break;
+            case 3:
                 if (arbol.getRaiz() != NULL)
                     busquedaDato(&mc, b, arbol);
                 else
                     cout << "\nNo hay datos cargados" << endl;
                 break;
-            case 3:
+            case 4:
                 if (arbol.getRaiz() != NULL)
                     insertarDato(&mc, b, &arbol);
                 else
                     cout << "\nNo hay datos cargados" << endl;
                 break;
-            case 4:
+            case 5:
                 if (arbol.getRaiz() != NULL)
                     eliminarDato(&mc, b, &arbol);
                 else
                     cout << "\nNo hay datos cargados" << endl;
                 break;
-            case 5:
+            case 6:
                 purgarDatos(b, &arbol, &mc);
                 break;
-            case 6:
+            case 7:
                 reindexar(&arbol, la, &mc);
                 break;
-            case 7:
+            case 8:
                 sigue = false;
                 break;
             default:
@@ -86,7 +95,7 @@ void Operador::busquedaDato(MemoriaCache *mc, Busqueda b, ABB arbol) {
         cout << "\nMemoria Caché:" << endl;
         mc->imprimerCache();
     } else {
-        cout << "Hubo un error!" << endl;
+        cout << "Hubo un error!. Dato no numerico" << endl;
     }
 }
 
@@ -103,7 +112,7 @@ void Operador::eliminarDato(MemoriaCache *mc, Busqueda b, ABB *arbol) {
         cout << "\nMemoria Caché:" << endl;
         mc->imprimerCache();
     } else {
-        cout << "Hubo un error!" << endl;
+        cout << "Hubo un error! Dato no numerico" << endl;
     }
 }
 
@@ -143,7 +152,7 @@ void Operador::insertarDato(MemoriaCache *mc, Busqueda b, ABB *arbol) {
         cout << "\nMemoria Caché:" << endl;
         mc->imprimerCache();
     } else
-        cout << "Hubo un error" << endl;
+        cout << "Hubo un error! Dato no numerico" << endl;
 
 }
 

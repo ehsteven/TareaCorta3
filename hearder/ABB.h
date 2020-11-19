@@ -15,6 +15,7 @@ public:
     NodoBB(int num, string pNombre) {
         cedula = num;
         nombre = pNombre;
+        indice = 0;
         Hizq = NULL;
         Hder = NULL;
     }

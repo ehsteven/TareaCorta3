@@ -84,7 +84,7 @@ NodoBB *ABB::buscarElemento(int num) {
     NodoBB *aux = raiz;
     int encontrado = 0;
     while (!encontrado && aux != NULL) {
-        if (num == aux->getCedula())
+        if (num == aux->cedula)
             encontrado = 1;
         else {
             if (num <= aux->getCedula()) {
@@ -125,8 +125,8 @@ void ABB::PreordenIndice(NodoBB *R) {
     if (R == NULL) {
         return;
     } else {
-        cout << "Indice: " << R->indice;
-        cout << " - Cedula: " << R->cedula << endl;
+        cout << "Cedula: " << R->cedula;
+        cout << " - Indice: " << R->indice<< endl;
         PreordenIndice(R->Hizq);
         PreordenIndice(R->Hder);
     }
@@ -179,3 +179,4 @@ void ABB::reemplazar(NodoBB **actual) {
         p->Hder = a->Hizq;
     (*actual) = a;
 }
+

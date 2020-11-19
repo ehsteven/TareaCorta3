@@ -3,7 +3,6 @@
 03;Kevin
 04;Mario
 101;Francisco
-102;Jose
 13;Kevin
 14;Mario
 32;Michael
@@ -16,7 +15,6 @@
 457;Álvaro
 54;Manuel
 89;Juan
-354;Paula
 36;Eduardo
 70;Jesús
 71;Nancy
@@ -58,7 +56,8 @@
 439;Manuel
 934;Juan
 24;estveen 24
-26;esyvee
 10;estveen
 16;26
 17;esteven
+10101;Hola
+120;Hola2
